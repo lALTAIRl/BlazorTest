@@ -1,0 +1,25 @@
+﻿version: '3.4'
+
+services:
+  blazortest.identity:
+    image: ${DOCKER_REGISTRY-}blazortestidentity
+    build:
+      context: .
+      dockerfile: BlazorTest.Identity/Dockerfile
+    depends_on: 
+        - "blazortest.netmqserver"
+
+  blazortest.orders:
+    image: ${DOCKER_REGISTRY-}blazortestorders
+    build:
+      context: .
+      dockerfile: BlazorTest.Orders/Dockerfile
+    depends_on:
+        - "blazortest.netmqserver"
+
+  blazortest.netmqserver:
+    image: ${DOCKER_REGISTRY-}blazortestnetmqserver
+    build:
+      context: .
+      dockerfile: BlazorTest.NetMqServer/Dockerfile
+

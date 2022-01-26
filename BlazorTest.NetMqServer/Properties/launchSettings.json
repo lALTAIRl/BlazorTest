@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BlazorTest.NetMqServer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
