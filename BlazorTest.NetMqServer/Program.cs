@@ -1,6 +1,8 @@
 ﻿using NetMQ;
 using NetMQ.Sockets;
 
+Console.WriteLine("Test");
+
 using (var server = new ResponseSocket())
 {
     server.Bind("tcp://localhost:5556");

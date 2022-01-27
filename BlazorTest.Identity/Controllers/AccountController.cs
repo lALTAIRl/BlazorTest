@@ -1,41 +1,36 @@
-﻿using BlazorTest.Identity.Commands;
-using BlazorTest.Identity.Models;
-using Microsoft.AspNetCore.Mvc;
-using NetMQ;
-using NetMQ.Sockets;
-
-namespace BlazorTest.Identity.Controllers
+﻿namespace BlazorTest.Identity.Controllers
 {
-    [Route("api/[controller]")]
+    using BlazorTest.Identity.Application.Aggregates.Account.Commands.CreateUserCommand;
+    using BlazorTest.Identity.Application.Aggregates.Account.Commands.LoginCommand;
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Route("identity")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost]
-        [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateAccount([FromBody] CreateAccountCommand command)
-        {
-            var appUser = new ApplicationUser
-            {
-                Id = Guid.NewGuid(),
-                Email = command.Email,
-                Password = command.Password
-            };
+        private IMediator _mediator;
 
-            using (var client = new RequestSocket())
-            {
-                client.Connect("tcp://127.0.0.1:5556");
-                client.SendFrame($"Id = {appUser.Id}, Email={appUser.Email}");
-                //var msg = client.ReceiveFrameString();
-                string message;
-                if (client.TryReceiveFrameString(out message))
-                {
-                    return this.Created(string.Empty, $"app user {appUser.Id} created");
-                }
-                else
-                {
-                    return this.BadRequest("No response from Orders service");
-                } 
-            }
+        protected IMediator Mediator => this._mediator ??= this.HttpContext.RequestServices.GetService<IMediator>();
+
+        [HttpPost]
+        [Route("sign-up")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateAccount([FromBody] CreateUserCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            
+            return this.Created(string.Empty, $"app user {result} created");
+        }
+
+        [HttpPost]
+        [Route("login")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Login([FromBody] LoginCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+
+            return this.Ok(result);
         }
     }
 }
