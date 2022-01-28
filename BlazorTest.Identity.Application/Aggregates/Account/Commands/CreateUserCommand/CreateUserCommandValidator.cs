@@ -21,7 +21,7 @@ namespace BlazorTest.Identity.Application.Aggregates.Account.Commands.CreateUser
                 .NotEmpty().WithMessage("Password is required");
 
             this.RuleFor(x => x)
-                .Must(IsPasswordEqualsConfirmation)
+                .Must(this.IsPasswordEqualsConfirmation)
                 .WithMessage("Confirmation and password are not equal");
         }
 

@@ -32,5 +32,6 @@ services:
     ports:
       - "42025:80"
       - "42035:443"
+      - "42065:5555"
     depends_on:
       - "mssql_server"
