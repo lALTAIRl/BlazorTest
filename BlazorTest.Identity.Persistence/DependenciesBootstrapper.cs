@@ -13,7 +13,7 @@ namespace BlazorTest.Identity.Persistence
             {
 
                 options.UseSqlServer(
-                        configuration.GetConnectionString("IdentityConnection"),
+                        configuration["IdentityConnection"],
                         b => b.MigrationsAssembly(typeof(BlazorTestIdentityDbContext).Assembly.FullName));
 
                 options.EnableDetailedErrors();

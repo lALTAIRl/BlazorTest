@@ -1,22 +1,36 @@
 ﻿version: '3.4'
 
 services:
-  identity_db:
+  mssql_server:
     image: mcr.microsoft.com/mssql/server
     environment:
-            SA_PASSWORD: "1qAZXSw3!"
-            ACCEPT_EULA: "Y"
+      SA_PASSWORD: "1qAZXSw3!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
 
   blazortest.identity:
     image: ${DOCKER_REGISTRY-}blazortestidentity
     build:
       context: .
       dockerfile: BlazorTest.Identity/Dockerfile
+    environment:
+      IdentityConnection: "Server=mssql_server,1433;Initial Catalog=identity_db;User ID=SA;Password=1qAZXSw3!;Connect Timeout=30;Encrypt=False;"
+    ports:
+      - "42005:80"
+      - "42045:443"
     depends_on:
-      - "identity_db"
+      - "mssql_server"
 
   blazortest.orders:
     image: ${DOCKER_REGISTRY-}blazortestorders
     build:
       context: .
       dockerfile: BlazorTest.Orders/Dockerfile
+    environment:
+      IdentityConnection: "Server=mssql_server,1433;Initial Catalog=orders_db;User ID=SA;Password=1qAZXSw3!;Connect Timeout=30;Encrypt=False;"
+    ports:
+      - "42025:80"
+      - "42035:443"
+    depends_on:
+      - "mssql_server"

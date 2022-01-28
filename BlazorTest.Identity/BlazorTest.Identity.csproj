@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BlazorTest.Identity.Persistence\BlazorTest.Identity.Persistence.csproj" />
+    <ProjectReference Include="..\BlazorTest.Identity.Persistence\BlazorTest.Identity.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

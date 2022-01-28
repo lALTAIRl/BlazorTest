@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace BlazorTest.Identity.Persistence
 {
-    internal class BlazorTestIdentityDbContext : DbContext, IBlazorTestIdentityDbContext
+    public class BlazorTestIdentityDbContext : DbContext, IBlazorTestIdentityDbContext
     {
         public BlazorTestIdentityDbContext(DbContextOptions<BlazorTestIdentityDbContext> options)
             : base(options)
