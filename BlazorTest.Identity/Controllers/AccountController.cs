@@ -1,5 +1,6 @@
 ﻿namespace BlazorTest.Identity.Controllers
 {
+    using System.Net;
     using BlazorTest.Identity.Application.Aggregates.Account.Commands.CreateUserCommand;
     using BlazorTest.Identity.Application.Aggregates.Account.Commands.LoginCommand;
     using MediatR;
@@ -16,6 +17,7 @@
         [HttpPost]
         [Route("sign-up")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateAccount([FromBody] CreateUserCommand command)
         {
             var result = await this.Mediator.Send(command);
