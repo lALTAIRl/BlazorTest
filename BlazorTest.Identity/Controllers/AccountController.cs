@@ -28,12 +28,11 @@
         [HttpPost]
         [Route("login")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Login(/*[FromBody] LoginCommand command*/)
+        public async Task<IActionResult> Login([FromBody] LoginCommand command)
         {
-            //var result = await this.Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
 
-            //return this.Ok(result);
-            return this.Ok(Guid.NewGuid());
+            return this.Ok(result);
         }
     }
 }

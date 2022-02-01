@@ -1,5 +1,7 @@
 ﻿@page "/sign-up"
-@inject HttpClient Http
+@using BlazorTest.Identity.Web.Client.Interfaces
+@using BlazorTest.Identity.Web.Client.Models
+@inject IAccountService accountService
 
 <PageTitle>Sign-up</PageTitle>
 <h1>Sign-up</h1>
@@ -9,27 +11,39 @@
         <div class="row">
             <label class="col-2">Email</label>
             <div class="col-6">
-                <input class="form-control sign-up-input" type="text" placeholder="Email" />
+                <input @bind="email" class="form-control sign-up-input" type="text" placeholder="Email" />
             </div>
         </div>
         <div class="row">
             <label class="col-2">Password</label>
             <div class="col-6">
-                <input class="form-control sign-up-input" type="password" placeholder="Password" />
+                <input @bind="password" class="form-control sign-up-input" type="password" placeholder="Password" />
             </div>
 
         </div>
         <div class="row">
             <label class="col-2">Confirmation</label>
             <div class="col-6">
-                <input class="form-control sign-up-input" type="password" placeholder="Confirmation" />
+                <input @bind="confirmation" class="form-control sign-up-input" type="password" placeholder="Confirmation" />
             </div>
         </div>
 
-        <button class="btn btn-primary">Sign-up</button>
+        <button class="btn btn-primary" @onclick="SignUp">Sign-up</button>
     </form>
 </div>
 
 @code {
-    
+    private string? email;
+    private string? password;
+    private string? confirmation;
+
+    private async Task SignUp()
+    {
+        var registrationModel = new RegistrationModel(email, password, confirmation);
+
+        var userId = await this.accountService.CreateAccount(registrationModel);
+
+        //testing
+        Console.WriteLine(userId);
+    }
 }

@@ -1,6 +1,8 @@
 ﻿@page "/sign-in"
-@inject HttpClient Http
+@using BlazorTest.Identity.Web.Client.Interfaces
+@using BlazorTest.Identity.Web.Client.Models
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject IAccountService accountService
 
 <PageTitle>Sign-in</PageTitle>
 <h1>Sign-in</h1>
@@ -10,31 +12,29 @@
         <div class="row">
             <label class="col-2">Email</label>
             <div class="col-6">
-                <input class="form-control sign-in-input" type="text" placeholder="Email" />
+                <input @bind="email" class="form-control sign-in-input" type="text" placeholder="Email" />
             </div>
         </div>
         <div class="row">
             <label class="col-2">Password</label>
             <div class="col-6">
-                <input class="form-control sign-in-input" type="password" placeholder="Password" />
+                <input @bind="password" class="form-control sign-in-input" type="password" placeholder="Password" />
             </div>
         </div>
     </form>
-    <button class="btn btn-primary"  @onclick="SignIn">Sign-in</button>
+    <button class="btn btn-primary" @onclick="SignIn">Sign-in</button>
 </div>
 
 @code {
+    private string? email;
+    private string? password;
+
     private async Task SignIn()
     {
-        //TODO: move to separate service
-        var response = await Http.PostAsync("https://localhost:42045/identity/login", null);
-        var userId = response.Content.ReadAsStringAsync().Result;
-        Console.WriteLine(userId);
+        var loginModel = new LoginModel(email, password);
+
+        var userId = await this.accountService.Login(loginModel);
 
         await localStorage.SetItemAsync("Authorization", userId);
-
-        //testing
-        var localStorageValue = await localStorage.GetItemAsync<string>("Authorization");
-        Console.WriteLine(localStorageValue);
     }
 }

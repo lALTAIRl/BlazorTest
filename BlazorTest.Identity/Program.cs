@@ -1,5 +1,4 @@
 ﻿using BlazorTest.Identity.Application;
-using BlazorTest.Identity.Application.Interfaces;
 using BlazorTest.Identity.Persistence;
 using Microsoft.EntityFrameworkCore;
 
