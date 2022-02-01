@@ -1,5 +1,6 @@
 ﻿@page "/sign-in"
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Sign-in</PageTitle>
 <h1>Sign-in</h1>
@@ -25,9 +26,15 @@
 @code {
     private async Task SignIn()
     {
-        //var userId = await Http.GetFromJsonAsync<Guid>("Account/sign-in");
-        //var userId = await Http.PostAsJsonAsync<object>("https://blazortest.identity:42045/identity/login", null);
-        var userId = await Http.PostAsJsonAsync<object>("https://blazortest.identity:42045/identity/login", null);
+        //TODO: move to separate service
+        var response = await Http.PostAsync("https://localhost:42045/identity/login", null);
+        var userId = response.Content.ReadAsStringAsync().Result;
         Console.WriteLine(userId);
+
+        await localStorage.SetItemAsync("Authorization", userId);
+
+        //testing
+        var localStorageValue = await localStorage.GetItemAsync<string>("Authorization");
+        Console.WriteLine(localStorageValue);
     }
 }
