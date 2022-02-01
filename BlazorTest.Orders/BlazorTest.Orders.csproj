@@ -15,4 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTest.Orders.Application\BlazorTest.Orders.Application.csproj" />
+    <ProjectReference Include="..\BlazorTest.Orders.Persistence\BlazorTest.Orders.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

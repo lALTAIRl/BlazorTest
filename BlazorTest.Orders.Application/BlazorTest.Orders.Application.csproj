@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Aggregates\Orders\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTest.Orders.Domain\BlazorTest.Orders.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

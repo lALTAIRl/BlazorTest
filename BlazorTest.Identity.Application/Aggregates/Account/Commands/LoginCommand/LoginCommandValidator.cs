@@ -10,19 +10,19 @@ namespace BlazorTest.Identity.Application.Aggregates.Account.Commands.LoginComma
 
         public LoginCommandValidator(IBlazorTestIdentityDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            //this.dbContext = dbContext;
 
-            this.RuleFor(x => x.Email)
-                .Must(this.IsUserExists).WithMessage("Account with provided email does not exist")
-                .EmailAddress().WithMessage("The entered email is invalid")
-                .NotEmpty().WithMessage("Email is required");
+            //this.RuleFor(x => x.Email)
+            //    .Must(this.IsUserExists).WithMessage("Account with provided email does not exist")
+            //    .EmailAddress().WithMessage("The entered email is invalid")
+            //    .NotEmpty().WithMessage("Email is required");
 
-            this.RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Password is required");
+            //this.RuleFor(x => x.Password)
+            //    .NotEmpty().WithMessage("Password is required");
 
-            this.RuleFor(x => x)
-                .Must(IsValidCredentials)
-                .WithMessage("Invalid credentials");
+            //this.RuleFor(x => x)
+            //    .Must(IsValidCredentials)
+            //    .WithMessage("Invalid credentials");
         }
 
         private bool IsUserExists(string email)

@@ -28,10 +28,22 @@ services:
       context: .
       dockerfile: BlazorTest.Orders/Dockerfile
     environment:
-      IdentityConnection: "Server=mssql_server,1433;Initial Catalog=orders_db;User ID=SA;Password=1qAZXSw3!;Connect Timeout=30;Encrypt=False;"
+      OrdersConnection: "Server=mssql_server,1433;Initial Catalog=orders_db;User ID=SA;Password=1qAZXSw3!;Connect Timeout=30;Encrypt=False;"
     ports:
       - "42025:80"
       - "42035:443"
       - "42065:5555"
     depends_on:
       - "mssql_server"
+
+  blazortest.identity.web.server:
+    image: ${DOCKER_REGISTRY-}blazortestidentitywebserver
+    build:
+      context: .
+      dockerfile: BlazorTest.Identity.Web/Server/Dockerfile
+    ports:
+      - "42125:80"
+      - "42135:443"
+    depends_on:
+      - "blazortest.identity"
+      - "blazortest.orders"

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTest.Identity.Application\BlazorTest.Identity.Application.csproj" />
+    <ProjectReference Include="..\BlazorTest.Identity.Domain\BlazorTest.Identity.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

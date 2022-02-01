@@ -1,0 +1,33 @@
+﻿@page "/sign-in"
+@inject HttpClient Http
+
+<PageTitle>Sign-in</PageTitle>
+<h1>Sign-in</h1>
+
+<div class="sign-in-wrapper container">
+    <form>
+        <div class="row">
+            <label class="col-2">Email</label>
+            <div class="col-6">
+                <input class="form-control sign-in-input" type="text" placeholder="Email" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-2">Password</label>
+            <div class="col-6">
+                <input class="form-control sign-in-input" type="password" placeholder="Password" />
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-primary"  @onclick="SignIn">Sign-in</button>
+</div>
+
+@code {
+    private async Task SignIn()
+    {
+        //var userId = await Http.GetFromJsonAsync<Guid>("Account/sign-in");
+        //var userId = await Http.PostAsJsonAsync<object>("https://blazortest.identity:42045/identity/login", null);
+        var userId = await Http.PostAsJsonAsync<object>("https://blazortest.identity:42045/identity/login", null);
+        Console.WriteLine(userId);
+    }
+}
