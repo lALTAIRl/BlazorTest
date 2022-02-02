@@ -12,7 +12,7 @@
             get; set;
         }
 
-        public string Confirmation
+        public string PasswordConfirmation
         {
             get; set;
         }
@@ -21,7 +21,7 @@
         {
             this.Email = email;
             this.Password = password;
-            this.Confirmation = confirmation;
+            this.PasswordConfirmation = confirmation;
         }
     }
 }
